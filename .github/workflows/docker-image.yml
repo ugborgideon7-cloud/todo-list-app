@@ -27,4 +27,13 @@ jobs:
       - name: Run Tests
         env:
           SQLITE_DB_LOCATION: ./tmp/todos/todo.db
-        run: yarn test
+        run: yarn test 
+
+  build:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build the Docker image
+        run: docker build -t todo_app:v$(date +%s) .
+      
